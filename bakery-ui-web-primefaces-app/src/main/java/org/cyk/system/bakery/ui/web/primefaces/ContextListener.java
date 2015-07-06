@@ -24,7 +24,6 @@ public class ContextListener extends AbstractContextListener implements Serializ
 	protected void initialisation() {
 		super.initialisation();
 		ApplicationInstallationPage.LISTENERS.add(new ApplicationInstallListener() {
-			
 			@Override
 			public void install(ApplicationInstallationFormModel formModel) {
 				
@@ -36,7 +35,7 @@ public class ContextListener extends AbstractContextListener implements Serializ
 	protected void identifiableConfiguration(ServletContextEvent event) {
 		super.identifiableConfiguration(event);
 		uiManager.registerApplicationUImanager(RootWebManager.getInstance());
-		
+		uiManager.registerApplicationUImanager(BakeryWebManager.getInstance());
 	}
 	
 	

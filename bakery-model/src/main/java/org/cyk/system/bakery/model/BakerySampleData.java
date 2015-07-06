@@ -2,7 +2,7 @@ package org.cyk.system.bakery.model;
 
 import java.io.Serializable;
 
-public class SampleData implements Serializable {
+public class BakerySampleData implements Serializable {
 
 	private static final long serialVersionUID = 5898014003593786829L;
 

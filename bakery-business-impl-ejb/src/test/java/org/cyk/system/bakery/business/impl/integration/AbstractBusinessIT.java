@@ -85,6 +85,7 @@ public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased
                 new ArchiveBuilder().create().getArchive().
                     addClasses(BusinessIntegrationTestHelper.classes()).
                     addPackages(Boolean.FALSE, BusinessIntegrationTestHelper.packages()).
+                    addPackages(Boolean.TRUE,"org.cyk.system.company").
                     addPackages(Boolean.TRUE,"org.cyk.system.bakery") 
                 ;
     } 
