@@ -10,15 +10,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.apache.commons.lang3.StringUtils;
 import org.cyk.system.bakery.business.api.production.BakeryUnitDeliveryEmployeeProductionBusiness;
+import org.cyk.system.bakery.business.api.production.BakeryUnitDeliveryResellerProductionBusiness;
 import org.cyk.system.bakery.business.api.structure.BakeryUnitDeliveryEmployeeBusiness;
 import org.cyk.system.bakery.business.api.structure.BakeryUnitDeliveryResellerBusiness;
 import org.cyk.system.bakery.model.production.AbstractBakeryUnitDeliveryProduction;
 import org.cyk.system.bakery.model.production.BakeryUnitDeliveryEmployeeProduction;
+import org.cyk.system.bakery.model.production.BakeryUnitDeliveryResellerProduction;
 import org.cyk.system.bakery.model.production.BakeryUnitProduction;
 import org.cyk.system.bakery.model.production.SellDetails;
 import org.cyk.system.bakery.model.structure.AbstractBakeryUnitDelivery;
@@ -40,6 +39,9 @@ import org.cyk.utility.common.annotation.user.interfaces.Input;
 import org.cyk.utility.common.annotation.user.interfaces.InputText;
 import org.cyk.utility.common.model.table.TableAdapter;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Named @ViewScoped @Getter @Setter
 public class BakeryUnitProductionConsultPage extends AbstractConsultPage<BakeryUnitProduction> implements Serializable {
 
@@ -48,12 +50,14 @@ public class BakeryUnitProductionConsultPage extends AbstractConsultPage<BakeryU
 	@Inject private BakeryUnitDeliveryEmployeeBusiness bakeryUnitDeliveryEmployeeBusiness;
 	@Inject private BakeryUnitDeliveryEmployeeProductionBusiness bakeryUnitDeliveryEmployeeProductionBusiness;
 	@Inject private BakeryUnitDeliveryResellerBusiness bakeryUnitDeliveryResellerBusiness;
+	@Inject private BakeryUnitDeliveryResellerProductionBusiness bakeryUnitDeliveryResellerProductionBusiness;
 	
 	private List<BakeryUnitDeliveryEmployee> bakeryUnitDeliveryEmployees;
 	private List<BakeryUnitDeliveryReseller> bakeryUnitDeliveryResellers;
 	
 	private FormOneData<BakeryUnitProductionOutputDetails> bakeryUnitProductionDetails;
 	private Table<BakeryUnitDeliveryEmployeeProductionDetails> bakeryUnitDeliveryEmployeeProductionDetails;
+	private Table<BakeryUnitDeliveryResellerProductionDetails> bakeryUnitDeliveryResellerProductionDetails;
 	
 	@Override
 	protected void initialisation() {
@@ -75,18 +79,18 @@ public class BakeryUnitProductionConsultPage extends AbstractConsultPage<BakeryU
 	protected void afterInitialisation() {
 		super.afterInitialisation();
 		Collection<BakeryUnitDeliveryEmployeeProduction> bakeryUnitDeliveryEmployeeProductions = bakeryUnitDeliveryEmployeeProductionBusiness.findByBakeryUnitProduction(identifiable);
-		Collection<BakeryUnitDeliveryEmployeeProductionDetails> details = new ArrayList<>();
+		Collection<BakeryUnitDeliveryEmployeeProductionDetails> employeeProductions = new ArrayList<>();
 		for(BakeryUnitDeliveryEmployee employee : bakeryUnitDeliveryEmployeeBusiness.findAll()){
 			Boolean added =  Boolean.FALSE;
 			for(BakeryUnitDeliveryEmployeeProduction production : bakeryUnitDeliveryEmployeeProductions){
 				if(production.getBakeryUnitDeliveryEmployee().equals(employee)){
-					details.add(new BakeryUnitDeliveryEmployeeProductionDetails(production));
+					employeeProductions.add(new BakeryUnitDeliveryEmployeeProductionDetails(production));
 					added = Boolean.TRUE;
 					//break;
 				}
 			}
 			if(Boolean.FALSE.equals(added))
-				details.add(new BakeryUnitDeliveryEmployeeProductionDetails(employee));
+				employeeProductions.add(new BakeryUnitDeliveryEmployeeProductionDetails(employee));
 		}
 		
 		TableAdapter<Row<BakeryUnitDeliveryEmployeeProductionDetails>, Column, BakeryUnitDeliveryEmployeeProductionDetails, String, Cell, String> listener = 
@@ -103,7 +107,7 @@ public class BakeryUnitProductionConsultPage extends AbstractConsultPage<BakeryU
 				row.setEditable(row.getData().getDeliveryProduction()==null);
 			}
 		};
-		bakeryUnitDeliveryEmployeeProductionDetails = createDetailsTable(BakeryUnitDeliveryEmployeeProductionDetails.class, details,listener, "model.entity.bakeryUnitDeliveryEmployee");	
+		bakeryUnitDeliveryEmployeeProductionDetails = createDetailsTable(BakeryUnitDeliveryEmployeeProductionDetails.class, employeeProductions,listener, "model.entity.bakeryUnitDeliveryEmployee");	
 		bakeryUnitDeliveryEmployeeProductionDetails.setShowHeader(Boolean.FALSE);
 		bakeryUnitDeliveryEmployeeProductionDetails.setShowFooter(Boolean.FALSE);
 		//bakeryUnitDeliveryEmployeeProductionDetails.setShowOpenCommand(Boolean.TRUE);
@@ -124,6 +128,57 @@ public class BakeryUnitProductionConsultPage extends AbstractConsultPage<BakeryU
 				super.serve(command, parameter);
 			}
 		});
+		
+		TableAdapter<Row<BakeryUnitDeliveryResellerProductionDetails>, Column, BakeryUnitDeliveryResellerProductionDetails, String, Cell, String> listener2 = 
+				new TableAdapter<Row<BakeryUnitDeliveryResellerProductionDetails>, Column, BakeryUnitDeliveryResellerProductionDetails, String, Cell, String>(){
+			
+			@Override
+			public Boolean ignore(Field field) {
+				return field.getName().equals("residualBreadQuantity");
+			}
+			
+			@Override
+			public void rowAdded(Row<BakeryUnitDeliveryResellerProductionDetails> row) {
+				super.rowAdded(row);
+				row.setEditable(row.getData().getDeliveryProduction()==null);
+			}
+		};
+		Collection<BakeryUnitDeliveryResellerProduction> bakeryUnitDeliveryResellerProductions = bakeryUnitDeliveryResellerProductionBusiness.findByBakeryUnitProduction(identifiable);
+		Collection<BakeryUnitDeliveryResellerProductionDetails> resellerProductions = new ArrayList<>();
+		for(BakeryUnitDeliveryReseller reseller : bakeryUnitDeliveryResellerBusiness.findAll()){
+			Boolean added =  Boolean.FALSE;
+			for(BakeryUnitDeliveryResellerProduction production : bakeryUnitDeliveryResellerProductions){
+				if(production.getBakeryUnitDeliveryReseller().equals(reseller)){
+					resellerProductions.add(new BakeryUnitDeliveryResellerProductionDetails(production));
+					added = Boolean.TRUE;
+					//break;
+				}
+			}
+			if(Boolean.FALSE.equals(added))
+				resellerProductions.add(new BakeryUnitDeliveryResellerProductionDetails(reseller));
+		}
+		bakeryUnitDeliveryResellerProductionDetails = createDetailsTable(BakeryUnitDeliveryResellerProductionDetails.class, resellerProductions,listener2, "model.entity.bakeryUnitDeliveryReseller");	
+		bakeryUnitDeliveryResellerProductionDetails.setShowHeader(Boolean.FALSE);
+		bakeryUnitDeliveryResellerProductionDetails.setShowFooter(Boolean.FALSE);
+		//bakeryUnitDeliveryResellerProductionDetails.setShowOpenCommand(Boolean.TRUE);
+		bakeryUnitDeliveryResellerProductionDetails.setShowEditColumn(Boolean.TRUE);
+		
+		bakeryUnitDeliveryResellerProductionDetails.getCrudOneRowCommandable().getCommand().getCommandListeners().add(new CommandAdapter(){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void serve(UICommand command, Object parameter) {
+				@SuppressWarnings("unchecked")
+				Row<BakeryUnitDeliveryResellerProductionDetails> row = (Row<BakeryUnitDeliveryResellerProductionDetails>) parameter;
+				navigationManager.redirectTo("bakeryUnitDeliveryResellerProductionEditView", new Object[]{
+						uiManager.businessEntityInfos(BakeryUnitProduction.class).getIdentifier(),identifiable.getIdentifier()
+						,uiManager.businessEntityInfos(BakeryUnitDeliveryReseller.class).getIdentifier(),
+						row.getData().getDeliveryProduction()==null?row.getData().getDelivery().getIdentifier():row.getData().getDeliveryProduction().getBakeryUnitDeliveryReseller().getIdentifier()
+				});
+				super.serve(command, parameter);
+			}
+		});
+		
 		//for(Row<BakeryUnitDeliveryEmployeeProductionDetails> row : bakeryUnitDeliveryEmployeeProductionDetails.getRows())
 		//	row.setEditable(Boolean.TRUE);
 		//bakeryUnitDeliveryEmployeeProductionDetails.setShowToolBar(Boolean.TRUE);
@@ -186,6 +241,23 @@ public class BakeryUnitProductionConsultPage extends AbstractConsultPage<BakeryU
 		@Override
 		protected Person person() {
 			return delivery==null?deliveryProduction.getBakeryUnitDeliveryEmployee().getPerson():delivery.getPerson();
+		}
+	}
+	
+	@Getter @Setter
+	private class BakeryUnitDeliveryResellerProductionDetails extends AbstractBakeryUnitDeliveryProductionDetails<BakeryUnitDeliveryReseller,BakeryUnitDeliveryResellerProduction> implements Serializable {
+		private static final long serialVersionUID = -1498269103849317057L;
+		
+		public BakeryUnitDeliveryResellerProductionDetails(BakeryUnitDeliveryResellerProduction bakeryUnitDeliveryResellerProduction) {
+			super(bakeryUnitDeliveryResellerProduction);
+		}
+		public BakeryUnitDeliveryResellerProductionDetails(BakeryUnitDeliveryReseller bakeryUnitDeliveryReseller) {
+			super(bakeryUnitDeliveryReseller);
+		}
+
+		@Override
+		protected Person person() {
+			return delivery==null?deliveryProduction.getBakeryUnitDeliveryReseller().getPerson():delivery.getPerson();
 		}
 	}
 	

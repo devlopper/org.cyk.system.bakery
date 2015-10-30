@@ -3,6 +3,8 @@ package org.cyk.system.bakery.business.impl.integration;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.cyk.system.company.business.api.CompanyBusinessTestHelper;
+import org.cyk.system.company.business.impl.CompanyBusinessLayer;
 import org.cyk.system.root.business.api.GenericBusiness;
 import org.cyk.system.root.business.api.party.ApplicationBusiness;
 import org.cyk.system.root.business.impl.BusinessIntegrationTestHelper;
@@ -14,8 +16,8 @@ import org.cyk.system.root.business.impl.validation.ExceptionUtils;
 import org.cyk.system.root.business.impl.validation.ValidatorMap;
 import org.cyk.system.root.model.AbstractIdentifiable;
 import org.cyk.system.root.persistence.impl.GenericDaoImpl;
-import org.cyk.utility.test.AbstractIntegrationTestJpaBased;
 import org.cyk.utility.test.ArchiveBuilder;
+import org.cyk.utility.test.integration.AbstractIntegrationTestJpaBased;
 import org.jboss.shrinkwrap.api.Archive;
 
 public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased {
@@ -30,6 +32,9 @@ public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased
 	@Inject protected RootTestHelper rootTestHelper;
 	
 	@Inject protected ValidatorMap validatorMap;// = ValidatorMap.getInstance();
+	@Inject protected RootBusinessLayer rootBusinessLayer;
+	@Inject protected CompanyBusinessLayer companyBusinessLayer;
+	@Inject protected CompanyBusinessTestHelper companyBusinessTestHelper;
     
     @Override
     public EntityManager getEntityManager() {
@@ -98,7 +103,7 @@ public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased
     @Override protected void read() {}
     @Override protected void update() {}
     
-    protected void fakeInstallation(){
-    	applicationBusiness.install(RootBusinessLayer.fakeInstallation());
+    protected void installApplication(){
+    	companyBusinessLayer.installApplication();
     }
 }

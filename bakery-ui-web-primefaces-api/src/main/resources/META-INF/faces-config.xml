@@ -10,6 +10,17 @@
 		
 		<!-- Bakery Unit Manager -->
 		<navigation-case>
+			<from-outcome>bakeryUnitEditView</from-outcome>
+			<to-view-id>/private/__role__/__bakeryunitmanager__/editonebakeryunit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>bakeryUnitListView</from-outcome>
+			<to-view-id>/private/__role__/__bakeryunitmanager__/listonebakeryunit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>bakeryUnitProductionEditView</from-outcome>
 			<to-view-id>/private/__role__/__bakeryunitmanager__/editonebakeryunitproduction.xhtml</to-view-id>
 			<redirect />

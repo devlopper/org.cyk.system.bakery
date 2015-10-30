@@ -13,9 +13,29 @@
     <ui:decorate template="#{webPageLayoutManager.decoratedTemplate}">
         <ui:param name="pageController" value="#{bakeryUnitProductionConsultPage}" />
         <ui:define name="body">
-        	<cyk:formOneData value="#{bakeryUnitProductionConsultPage.bakeryUnitProductionDetails}"/>
+        	<table style="width: 100%;">
+        		<tr>
+        			<td style="width: 40%;">
+        				<cyk:formOneData value="#{bakeryUnitProductionConsultPage.bakeryUnitProductionDetails}"/>
+        			</td>
+        			<td>
+        				<h:outputText value="Solde veille : " /><br />
+        				<h:outputText value="Total entrees : " /><br />
+        				<h:outputText value="Versement : " /><br />
+        				<h:outputText value="Solde jour : " /><br />
+        			</td>
+        		</tr>
+        	</table>
 			<p:separator/>
-			<cyk:table value="#{bakeryUnitProductionConsultPage.bakeryUnitDeliveryEmployeeProductionDetails}"/>
+			<p:tabView>
+				<p:tab title="#{bakeryUnitProductionConsultPage.bakeryUnitDeliveryEmployeeProductionDetails.title}">
+					<cyk:table value="#{bakeryUnitProductionConsultPage.bakeryUnitDeliveryEmployeeProductionDetails}"/>
+				</p:tab>
+				<p:tab title="#{bakeryUnitProductionConsultPage.bakeryUnitDeliveryResellerProductionDetails.title}">
+					<cyk:table value="#{bakeryUnitProductionConsultPage.bakeryUnitDeliveryResellerProductionDetails}"/>
+				</p:tab>
+			</p:tabView>
+			
         </ui:define>
         
     </ui:decorate>

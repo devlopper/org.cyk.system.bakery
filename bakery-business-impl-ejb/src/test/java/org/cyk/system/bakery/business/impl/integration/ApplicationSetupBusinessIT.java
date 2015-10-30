@@ -1,5 +1,8 @@
 package org.cyk.system.bakery.business.impl.integration;
 
+import org.cyk.system.company.business.impl.CompanyBusinessLayer;
+import org.cyk.system.root.business.impl.RootBusinessLayer;
+import org.cyk.system.root.model.security.Installation;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.Archive;
 
@@ -14,7 +17,14 @@ public class ApplicationSetupBusinessIT extends AbstractBusinessIT {
     
     @Override
     protected void businesses() {
-    	fakeInstallation();
+    	installApplication();
+    	
+    	/*
+    	Installation installation = CompanyBusinessLayer.getInstance().buildInstallation();
+    	installation.setFaked(Boolean.TRUE);
+    	applicationBusiness.install(installation);
+    	*/
+    	System.exit(0);
     }
 
     

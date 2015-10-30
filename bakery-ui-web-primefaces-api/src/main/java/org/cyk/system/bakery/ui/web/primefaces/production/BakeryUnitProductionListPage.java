@@ -2,27 +2,30 @@ package org.cyk.system.bakery.ui.web.primefaces.production;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.cyk.system.bakery.business.api.production.BakeryUnitProductionBusiness;
 import org.cyk.system.bakery.model.production.BakeryUnitProduction;
 import org.cyk.system.bakery.model.production.BakeryUnitProductionSearchCriteria;
-import org.cyk.system.bakery.ui.web.primefaces.model.BakeryUnitProductionQueryFormModel;
-import org.cyk.system.bakery.ui.web.primefaces.model.BakeryUnitProductionQueryResultFormModel;
 import org.cyk.system.root.business.impl.RootBusinessLayer;
+import org.cyk.ui.api.data.collector.form.AbstractFormModel;
 import org.cyk.ui.api.model.table.Row;
 import org.cyk.ui.web.primefaces.Commandable;
 import org.cyk.ui.web.primefaces.page.AbstractBusinessQueryPage;
+import org.cyk.utility.common.annotation.user.interfaces.Input;
+import org.cyk.utility.common.annotation.user.interfaces.InputCalendar;
+import org.cyk.utility.common.annotation.user.interfaces.InputCalendar.Format;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Named @ViewScoped @Getter @Setter
-public class BakeryUnitProductionListPage extends AbstractBusinessQueryPage<BakeryUnitProduction, BakeryUnitProductionQueryFormModel, 
-	BakeryUnitProductionQueryResultFormModel> implements Serializable {
+public class BakeryUnitProductionListPage extends AbstractBusinessQueryPage<BakeryUnitProduction, BakeryUnitProductionListPage.BakeryUnitProductionQueryFormModel, 
+BakeryUnitProductionListPage.BakeryUnitProductionQueryResultFormModel> implements Serializable {
 
 	private static final long serialVersionUID = 9040359120893077422L;
 
@@ -82,5 +85,34 @@ public class BakeryUnitProductionListPage extends AbstractBusinessQueryPage<Bake
 		return BakeryUnitProductionQueryResultFormModel.class;
 	}
 	
+	/**/
+	
+	@Getter @Setter
+	public static class BakeryUnitProductionQueryFormModel implements Serializable {
+
+		private static final long serialVersionUID = -3328823824725030136L;
+
+		@Input @InputCalendar
+		private Date fromDate;
+		
+		@Input @InputCalendar
+		private Date toDate;
+		
+	}
+	
+	@Getter @Setter
+	public static class BakeryUnitProductionQueryResultFormModel extends AbstractFormModel<BakeryUnitProduction> implements Serializable {
+
+		private static final long serialVersionUID = -3328823824725030136L;
+
+		@Input @InputCalendar(format=Format.DATE_SHORT) private Date date;
+		
+		@Override
+		public void read() {
+			super.read();
+			date = identifiable.getProductionSpreadSheet().getPeriod().getFromDate();
+		}
+		
+	}
 	
 }

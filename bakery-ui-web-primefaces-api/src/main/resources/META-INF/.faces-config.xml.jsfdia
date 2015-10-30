@@ -3,23 +3,23 @@
  <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="bakeryUnitProductionEditView::#private#__role__#__bakeryunitmanager__#editonebakeryunitproduction.xhtml"
+    ID="bakeryUnitEditView::#private#__role__#__bakeryunitmanager__#editonebakeryunit.xhtml"
     NAME="output"
+    PATH="/private/__role__/__bakeryunitmanager__/editonebakeryunit.xhtml"
+    TARGET="rules:#private#__role__#__bakeryunitmanager__#editonebakeryunit.xhtml"
+    TITLE="bakeryUnitEditView" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="bakeryUnitListView::#private#__role__#__bakeryunitmanager__#listonebakeryunit.xhtml"
+    NAME="output1"
+    PATH="/private/__role__/__bakeryunitmanager__/listonebakeryunit.xhtml"
+    TARGET="rules:#private#__role__#__bakeryunitmanager__#listonebakeryunit.xhtml"
+    TITLE="bakeryUnitListView" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="bakeryUnitProductionEditView::#private#__role__#__bakeryunitmanager__#editonebakeryunitproduction.xhtml"
+    NAME="output2"
     PATH="/private/__role__/__bakeryunitmanager__/editonebakeryunitproduction.xhtml"
     TARGET="rules:#private#__role__#__bakeryunitmanager__#editonebakeryunitproduction.xhtml"
     TITLE="bakeryUnitProductionEditView" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT
-    ID="bakeryUnitProductionListView::#private#__role__#__bakeryunitmanager__#listbakeryunitproduction.xhtml"
-    NAME="output1"
-    PATH="/private/__role__/__bakeryunitmanager__/listbakeryunitproduction.xhtml"
-    TARGET="rules:#private#__role__#__bakeryunitmanager__#listbakeryunitproduction.xhtml"
-    TITLE="bakeryUnitProductionListView" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT
-    ID="bakeryUnitProductionConsultView::#private#__role__#__bakeryunitmanager__#consultonebakeryunitproduction.xhtml"
-    NAME="output2"
-    PATH="/private/__role__/__bakeryunitmanager__/consultonebakeryunitproduction.xhtml"
-    TARGET="rules:#private#__role__#__bakeryunitmanager__#consultonebakeryunitproduction.xhtml"
-    TITLE="bakeryUnitProductionConsultView" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="bakeryUnitDeliveryEmployeeProductionEditView::#private#__role__#__bakeryunitmanager__#editonebakeryunitdeliveryemployeeproduction.xhtml"
     NAME="output3"
@@ -64,4 +64,12 @@
   NAME="rules:#private#__role__#__bakeryunitmanager__#listbakeryunitdeliveryemployeeproduction.xhtml"
   PATH="/private/__role__/__bakeryunitmanager__/listbakeryunitdeliveryemployeeproduction.xhtml"
   SHAPE="304,641,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#private#__role__#__bakeryunitmanager__#editonebakeryunit.xhtml"
+  PATH="/private/__role__/__bakeryunitmanager__/editonebakeryunit.xhtml"
+  SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#private#__role__#__bakeryunitmanager__#listonebakeryunit.xhtml"
+  PATH="/private/__role__/__bakeryunitmanager__/listonebakeryunit.xhtml"
+  SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

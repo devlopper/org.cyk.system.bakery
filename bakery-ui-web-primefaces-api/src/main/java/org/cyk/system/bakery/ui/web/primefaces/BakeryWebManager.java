@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import org.cyk.system.bakery.business.impl.BakeryBusinessLayer;
 import org.cyk.system.bakery.model.production.BakeryUnitProduction;
+import org.cyk.system.bakery.model.structure.BakeryUnit;
 import org.cyk.ui.api.AbstractUserSession;
 import org.cyk.ui.api.command.UICommandable;
 import org.cyk.ui.api.command.menu.SystemMenu;
@@ -47,6 +48,10 @@ public class BakeryWebManager extends AbstractPrimefacesManager implements Seria
 	@Override
 	public SystemMenu systemMenu(AbstractUserSession userSession) {
 		SystemMenu systemMenu = new SystemMenu();
+		
+		UICommandable group = uiProvider.createCommandable("bakeryunit", null);
+		group.addChild(menuManager.crudMany(BakeryUnit.class, null));	
+		systemMenu.getReferenceEntities().add(group);
 		
 		addBusinessMenu(systemMenu,bakeryUnitProductionCommandables(userSession));
 		return systemMenu;
