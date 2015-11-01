@@ -12,7 +12,6 @@ import org.cyk.system.root.model.search.AbstractPeriodSearchCriteria;
 public class BakeryUnitProductionSearchCriteria extends AbstractPeriodSearchCriteria implements Serializable {
 
 	private static final long serialVersionUID = 6796076474234170332L;
-
 	
 	public BakeryUnitProductionSearchCriteria(Date fromDate,Date toDate) {
 		super(fromDate,toDate);

@@ -3,8 +3,8 @@ package org.cyk.system.bakery.business.impl.integration;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import org.cyk.system.company.business.api.CompanyBusinessTestHelper;
 import org.cyk.system.company.business.impl.CompanyBusinessLayer;
+import org.cyk.system.company.business.impl.CompanyBusinessTestHelper;
 import org.cyk.system.root.business.api.GenericBusiness;
 import org.cyk.system.root.business.api.party.ApplicationBusiness;
 import org.cyk.system.root.business.impl.BusinessIntegrationTestHelper;
